@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { List, Divider } from 'react-native-paper';
 import { fetchUsersData } from '../actions/actions.users';
 
-const Users = () => {
+const Users = ({ navigation }) => {
     const dispatch = useDispatch();
     const users = useSelector((state) => state.users)
 
