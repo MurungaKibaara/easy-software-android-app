@@ -23,14 +23,6 @@ const requestUsersError = (error) => ({
 
 export const fetchUsersData = () => async (dispatch) => {
     dispatch(requestUsersLoading());
-    // const URL = `${API_URL}`;
-
-    // const config = {
-    //     headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json'
-    //     },
-    // };
 
     try {
         const response = await axios.get(API_URL);
@@ -42,9 +34,9 @@ export const fetchUsersData = () => async (dispatch) => {
     }
 };
 
-export const updateUsersData = (params) => async (dispatch) => {
+export const updateUsersData = (params, id) => async (dispatch) => {
     dispatch(requestUsersLoading());
-    const URL = `${API_URL}/${params.id}`;
+    const URL = `${API_URL}/${id}`;
 
     const config = {
         headers: {

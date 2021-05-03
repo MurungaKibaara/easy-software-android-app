@@ -11,7 +11,7 @@ import {
 import UserAvatar from 'react-native-user-avatar';
 import { Divider } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUsersData } from '../actions/actions.users';
+import { fetchUsersData, updateUsersData } from '../actions/actions.users';
 
 const UserDetails =({ navigation, route }) => {
     const { item } = route.params;
@@ -27,15 +27,21 @@ const UserDetails =({ navigation, route }) => {
 
     React.useEffect(() => {
         const { data } = users;
-        data?.filter((user) => { user?.id == item?.id ? setState({...user}) : null })
+
+        if (data != null || data != undefined) {
+            return
+        }
+        
+        users?.data?.filter((user) => { user?.id == item?.id ? setState({...user}) : null })
     }, [users])
 
-    const handleChange = (name) = (value) => {
+    const handleChange = (name) => (value) => {
         setState({ ...state, [name]: value });
     }
     
     const updateUserData = () => {
-        dispatch(updateUsersData(state))
+        dispatch(updateUsersData(state, state?.id))
+        dispatch(fetchUsersData())
     }
 
     const fields = [
@@ -46,12 +52,11 @@ const UserDetails =({ navigation, route }) => {
     
     return (
         <SafeAreaView style={styles.container}>
-            {console.log({ item })}
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.topDrawerSection}>
                     {state?.name ? (
                     <UserAvatar
-                        size={100}
+                        size={80}
                         style={{ marginBottom: 5 }}
                         borderRadius={50}
                         name={state?.name ? state?.name : item?.name}
@@ -80,7 +85,7 @@ const UserDetails =({ navigation, route }) => {
                         name={state[field.name]}
                         defaultValue={state[field.name]}
                         placeholder=""
-                        onChangeText={() => handleChange(field.name)}
+                        onChangeText={handleChange(field?.name)}
                         returnKeyType="next"
                         autoCapitalize="none"
                         selectionColor="#000"
@@ -118,7 +123,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         borderBottomColor: `${'#f4f4f4'}`,
         borderBottomWidth: 1,
-        // flexDirection: 'row',
+        flexDirection: 'row',
         marginBottom: 30,
         height: 80
       },

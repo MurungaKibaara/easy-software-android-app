@@ -27,7 +27,11 @@ const users = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        data: action.data,
+        data: [
+              ...state.data.map((item) =>
+                item.id === action.data.id ? action.data : item
+              ),
+            ],
         error: '',
       };
     case types.REQUESTS_USERS_FAILURE:
