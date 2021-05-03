@@ -1,42 +1,43 @@
 import axios from 'axios';
-import { API_URL } from '../Config';
+import { API_URL } from '../config';
 import * as types from '../actions.types';
 
 const requestUsersLoading = () => ({
-  type: types.REQUEST_USERS_REQUEST,
+  type: types.REQUESTS_USERS_LOADING,
 });
 
 const requestUsersSuccess = (data) => ({
-  type: types.REQUEST_USERS_SUCCESS,
+  type: types.REQUESTS_USERS_SUCCESS,
   data,
 });
 
 const requestUsersUpdate = (data) => ({
-  type: types.REQUEST_USERS_UPDATE,
+  type: types.REQUESTS_USERS_UPDATE,
   data,
 });
 
 const requestUsersError = (error) => ({
-  type: types.REQUEST_USERS_FAILURE,
+  type: types.REQUESTS_USERS_FAILURE,
   error,
 });
 
 export const fetchUsersData = () => async (dispatch) => {
     dispatch(requestUsersLoading());
-    const URL = `${API_URL}`;
+    // const URL = `${API_URL}`;
 
-    const config = {
-        headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-        },
-    };
+    // const config = {
+    //     headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json'
+    //     },
+    // };
 
     try {
-        const response = await axios.get(URL, config);
+        const response = await axios.get(API_URL);
         dispatch(requestUsersSuccess(response.data));
 
     } catch (error) {
+      console.log({ error })
         dispatch(requestUsersError(error.response.error.toString()));
     }
 };

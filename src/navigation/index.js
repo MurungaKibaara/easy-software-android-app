@@ -5,6 +5,7 @@ import UsersScreen from '../pages/Users';
 import UserDetailsScreen from '../pages/UserDetails';
 
 export default () => {
+    
   const Stack = createStackNavigator();
   const StackScreen = () => (
     <Stack.Navigator>
