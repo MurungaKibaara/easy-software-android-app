@@ -23,14 +23,15 @@ const Users = ({ navigation }) => {
           style={{ padding: 4 }}
           title={item?.username}
           description={item?.name}
-        //   left={(props) => (
-        //     <List.Icon {...props} size={30} icon="account" color="#c4c4c4" />
-        //   )}
+          left={(props) => (
+            <List.Icon {...props} size={30} icon="account" color="#c4c4c4" />
+          )}
           right={(props) => (
             <List.Icon {...props} size={25} icon="chevron-right" color="#c4c4c4" />
           )}
-          onPress={() =>
-            navigation.navigate('UserDetails', { item })
+          onPress={() => {
+              console.log(item)
+            navigation.navigate('UserDetails', { item })}
           }
         />
       );
@@ -38,27 +39,25 @@ const Users = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
-                {
-                    users?.loading
-                    ? <ActivityIndicator 
-                        size={35}
-                        color="#000000"
-                        style={{ marginTop: 150, alignSelf: 'center' }}
-                    />
-                    : <FlatList
-                        data={users?.data}
-                        renderItem={renderRow}
-                        keyExtractor={(item, index) => index.toString()}
-                        onEndReachedThreshold={7}
-                        initialNumToRender={7}
-                        removeClippedSubviews={true}
-                        maxToRenderPerBatch={10}
-                        windowSize={10}
-                        ItemSeparatorComponent={() => <Divider />}
-                    />
-                }
-            </ScrollView>
+            {
+                users?.loading
+                ? <ActivityIndicator 
+                    size={35}
+                    color="#000000"
+                    style={{ marginTop: 150, alignSelf: 'center' }}
+                />
+                : <FlatList
+                    data={users?.data}
+                    renderItem={renderRow}
+                    keyExtractor={(item, index) => index.toString()}
+                    onEndReachedThreshold={7}
+                    initialNumToRender={7}
+                    removeClippedSubviews={true}
+                    maxToRenderPerBatch={10}
+                    windowSize={10}
+                    ItemSeparatorComponent={() => <Divider />}
+                />
+            }
         </SafeAreaView>
     )
 }
